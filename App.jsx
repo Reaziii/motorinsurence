@@ -20,7 +20,7 @@ const App = () => {
         <Stack.Navigator initialRouteName="হোম">
           <Stack.Screen
             options={{
-              title: 'Motor Insurance',
+              headerShown : false,
               headerTitleAlign: 'center',
               ...TransitionPresets.SlideFromRightIOS,
             }}

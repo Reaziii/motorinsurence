@@ -2,21 +2,11 @@ import {Pressable} from '@react-native-material/core';
 import {useIsFocused} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {View, Text, SafeAreaView, ScrollView, Image} from 'react-native';
+import Advertise from '../components/Advertise';
 
 const HomeScreen = ({navigation}) => {
   const isFocused = useIsFocused();
-  console.log(isFocused);
   const [menuItems, setMenuItems] = useState([
-    {
-      title: 'আমাদের সম্পর্কে',
-      logo: require('../assets/info.png'),
-      onPress: e => {
-        e.preventDefault();
-        console.log('pressed');
-        navigation.navigate('আমাদের সম্পর্কে');
-      },
-    },
-
     {
       title: 'মোটর সাইকেল',
       logo: require('../assets/motorcycle.png'),
@@ -41,17 +31,62 @@ const HomeScreen = ({navigation}) => {
         navigation.navigate('অন্যান্য');
       },
     },
+    {
+      title: 'আমাদের সম্পর্কে',
+      logo: require('../assets/info.png'),
+      onPress: e => {
+        e.preventDefault();
+        console.log('pressed');
+        navigation.navigate('আমাদের সম্পর্কে');
+      },
+    },
   ]);
 
   return (
     <SafeAreaView>
       <View
         style={{
-          justifyContent: 'center',
           alignItems: 'center',
           height: '100%',
           width: '100%',
         }}>
+        <View
+          style={{
+            height: 60,
+            width: '100%',
+          }}>
+          <Image
+            style={{
+              height: 60,
+              resizeMode: 'contain',
+              position: 'absolute',
+              margin: 0,
+              backgroundColor: 'green',
+              alignContent: 'flex-start',
+            }}
+            source={require('../assets/hello.png')}
+          />
+        </View>
+        <Text
+          style={{
+            fontSize: 14,
+            fontWeight: 'bold',
+            textAlign: 'center',
+            marginTop: 10,
+          }}>
+          এই এপ্সটি শুধুমাত্র তথ্য সংগ্রহের জন্য, তথ্য পাওয়ার পর আমরা আপনার সাথে
+          যোগাযোগ করব ইনশাল্লাহ।
+        </Text>
+        <Image
+          style={{
+            width: '60%',
+            resizeMode: 'contain',
+            height: 140,
+            marginTop: 10,
+            marginBottom : 40,
+          }}
+          source={require('../assets/banner1.jpg')}
+        />
         {menuItems.map((item, key) => (
           <Pressable
             style={{
@@ -89,6 +124,13 @@ const HomeScreen = ({navigation}) => {
             </View>
           </Pressable>
         ))}
+
+        <Advertise
+          style={{
+            position: 'absolute',
+            bottom: 30,
+          }}
+        />
       </View>
     </SafeAreaView>
   );

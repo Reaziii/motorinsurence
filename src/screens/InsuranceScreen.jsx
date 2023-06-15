@@ -13,6 +13,7 @@ import {
   StyleSheet,
   Image,
   TextInput,
+  Linking,
 } from 'react-native';
 import DocumentPicker from 'react-native-document-picker';
 import {isBangladeshiPhoneNumber, validateEmail} from '../utils/utils';
@@ -20,6 +21,8 @@ import VehicleList from '../components/VehicleList';
 import SubmitDialog from '../components/SubmitDialog';
 import axios from 'axios';
 import RNFS from 'react-native-fs';
+import {spreedsheetUrl} from '../../env';
+import Advertise from '../components/Advertise';
 const InsuranceScreen = ({route, navigation}) => {
   let type = route.name;
   if (type === 'অন্যান্য') type = 'Others';
@@ -27,23 +30,31 @@ const InsuranceScreen = ({route, navigation}) => {
   const [otherTypes, setOtherTypes] = useState([
     {
       id: 1,
-      name: 'স্কুটার',
+      name: 'কার',
     },
     {
       id: 2,
-      name: 'বাস',
+      name: 'মাইক্রো',
     },
     {
       id: 3,
-      name: 'ট্রাক',
-    },
-    {
-      id: 4,
       name: 'জীপ',
     },
     {
+      id: 4,
+      name: 'বাস',
+    },
+    {
       id: 5,
-      name: 'মাহেন্দ্রা',
+      name: 'কাভার্ড ভ্যান',
+    },
+    {
+      id: 6,
+      name: 'পিক আপ',
+    },
+    {
+      id: 7,
+      name: 'ট্রাক',
     },
   ]);
   const [details, setDetails] = useState({
@@ -99,8 +110,8 @@ const InsuranceScreen = ({route, navigation}) => {
       type === 'Others' ? details.selectedVehicle : type,
     );
     formdata.append('Email', details.email);
-    const url =
-      'https://script.google.com/macros/s/AKfycbw80CwVvqdfACFHFl8Iavpow_yz6COONaD0two3ZtYc1xgrl1XRnIaewL5QI4TW2oY/exec';
+    const url = spreedsheetUrl;
+
     axios
       .post(url, formdata, {
         headers: {
@@ -179,6 +190,21 @@ const InsuranceScreen = ({route, navigation}) => {
       type: 'text',
       value: 'email',
       onChange: e => setDetails({...details, email: e}),
+    },
+  ];
+
+  const insuranceItems = [
+    {
+      name: 'FIRE INSURANCE',
+      link: 'https://www.micl.com.bd/fire-insurance/',
+    },
+    {
+      name: 'MARINE INSURANCE',
+      link: 'https://www.micl.com.bd/marine-insurance/',
+    },
+    {
+      name: 'ENGINEERING INSURANCE',
+      link: 'https://www.micl.com.bd/engineering-insurance/',
     },
   ];
 
@@ -330,8 +356,46 @@ const InsuranceScreen = ({route, navigation}) => {
                 }
                 setVisible={setOpenVehicle}
               />
+
+              {insuranceItems.map((item, key) => (
+                <Pressable
+                  key={key}
+                  onPress={() => {
+                    Linking.openURL(item.link).catch(err => {
+                      console.log(err);
+                    });
+                  }}
+                  style={{
+                    height: 60,
+                    width: '100%',
+                    backgroundColor: '#7e8ed9',
+                    justifyContent: 'center',
+                    marginTop: 10,
+                  }}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: 18,
+                      fontWeight: 'bold',
+                      marginLeft: 15,
+                    }}>
+                    {item.name}
+                  </Text>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: 14,
+                      fontWeight: 'normal',
+                      marginLeft: 15,
+                      opacity : 0.5
+                    }}>
+                    {item.link}
+                  </Text>
+                </Pressable>
+              ))}
             </View>
           )}
+          <Advertise />
           <Pressable
             onPress={onSubmitHandle}
             style={{

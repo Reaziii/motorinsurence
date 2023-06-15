@@ -1,0 +1,1 @@
+export const spreedsheetUrl = 'https://script.google.com/macros/s/AKfycbw80CwVvqdfACFHFl8Iavpow_yz6COONaD0two3ZtYc1xgrl1XRnIaewL5QI4TW2oY/exec';
